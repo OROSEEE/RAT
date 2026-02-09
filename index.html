@@ -103,10 +103,10 @@
   const db = getFirestore(app);
   const auth = getAuth(app);
 
-  signInAnonymously(auth);
-
-  window.__FIREBASE__ = { db, auth };
+  // on expose aussi signInAnonymously pour que app.js puisse AWAIT
+  window.__FIREBASE__ = { db, auth, signInAnonymously };
 </script>
+
 
 <script src="app.js"></script>
 
