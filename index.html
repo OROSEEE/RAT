@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Signalements de rats - Paris 13e</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Signalements de rats – Paris 13e</h1>
+    <p>Données issues de l'Open Data de la Ville de Paris</p>
+</header>
+
+<div class="container">
+
+    <section class="report">
+  <h2>Faire un signalement</h2>
+
+  <form id="reportForm" class="report-form">
+    <label>
+      Adresse
+      <input id="address" name="address" type="text" placeholder="12 rue X, 75013 Paris" required />
+    </label>
+
+    <label>
+      Date
+      <input id="date" name="date" type="date" required />
+    </label>
+
+    <label>
+      Commentaire
+      <textarea id="comment" name="comment" rows="3" placeholder="Détails du signalement…" required></textarea>
+    </label>
+
+    <button type="submit">Placer le point</button>
+    <span id="formStatus" class="status"></span>
+  </form>
+
+  <div id="myMap" class="my-map"></div>
+
+  <h3>📌 Mes signalements</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Adresse</th>
+          <th>Commentaire</th>
+          <th>Lat</th>
+          <th>Lon</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="myReportsBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Leaflet (carte) -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Ton JS -->
+<script src="app.js"></script>
+
+<h1>Signalements de rats issue des données de Paris – Paris 13e</h1>
+    <!-- CARTE -->
+    <div class="map-container">
+        <iframe 
+            src="https://opendata.paris.fr/explore/embed/dataset/dans-ma-rue/map/?utm_source=chatgpt.com&disjunctive.conseilquartier&disjunctive.intervenant&disjunctive.type&disjunctive.soustype&disjunctive.arrondissement&disjunctive.prefixe&disjunctive.code_postal&refine.code_postal=75013&q=rat&basemap=jawg.dark&location=13,48.82399,2.36275&static=false&datasetcard=false&scrollWheelZoom=true"
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- TABLEAU -->
+    <div class="table-container">
+        <h2>Détail des signalements</h2>
+
+        <iframe 
+            src="https://opendata.paris.fr/explore/embed/dataset/dans-ma-rue/table/?disjunctive.conseilquartier&disjunctive.intervenant&disjunctive.type&disjunctive.soustype&disjunctive.arrondissement&disjunctive.prefixe&disjunctive.code_postal&refine.arrondissement=13&q=rat&static=false&datasetcard=false"
+            frameborder="0">
+        </iframe>
+
+    </div>
+
+</div>
+
+<footer>
+</footer>
+
+</body>
+</html>
