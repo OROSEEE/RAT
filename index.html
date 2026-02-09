@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>Signalements de rats - Paris 13e</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -18,83 +16,99 @@
 
 <div class="container">
 
+    <!-- SECTION SIGNALER -->
     <section class="report">
-  <h2>Faire un signalement</h2>
+        <h2>Faire un signalement</h2>
 
-  <form id="reportForm" class="report-form">
-    <label>
-      Adresse
-      <input id="address" name="address" type="text" placeholder="12 rue X, 75013 Paris" required />
-    </label>
+        <form id="reportForm" class="report-form">
+            <label>
+                Adresse
+                <input id="address" type="text" placeholder="12 rue X, 75013 Paris" required />
+            </label>
 
-    <label>
-      Date
-      <input id="date" name="date" type="date" required />
-    </label>
+            <label>
+                Date
+                <input id="date" type="date" required />
+            </label>
 
-    <label>
-      Commentaire
-      <textarea id="comment" name="comment" rows="3" placeholder="Détails du signalement…" required></textarea>
-    </label>
+            <label>
+                Commentaire
+                <textarea id="comment" rows="3" required></textarea>
+            </label>
 
-    <button type="submit">Placer le point</button>
-    <span id="formStatus" class="status"></span>
-  </form>
+            <button type="submit">Placer le point</button>
+            <span id="formStatus" class="status"></span>
+        </form>
 
-  <div id="myMap" class="my-map"></div>
+        <div id="myMap" class="my-map"></div>
 
-  <h3>📌 Mes signalements</h3>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Adresse</th>
-          <th>Commentaire</th>
-          <th>Lat</th>
-          <th>Lon</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="myReportsBody"></tbody>
-    </table>
-  </div>
-</section>
+        <h3>Mes signalements</h3>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Adresse</th>
+                        <th>Commentaire</th>
+                        <th>Lat</th>
+                        <th>Lon</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="myReportsBody"></tbody>
+            </table>
+        </div>
+    </section>
 
-<!-- Leaflet (carte) -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- CARTE OPEN DATA -->
+    <h2>Signalements officiels (Open Data)</h2>
 
-<!-- Ton JS -->
-<script src="app.js"></script>
-
-<h1>Signalements de rats issue des données de Paris – Paris 13e</h1>
-    <!-- CARTE -->
     <div class="map-container">
         <iframe 
-            src="https://opendata.paris.fr/explore/embed/dataset/dans-ma-rue/map/?utm_source=chatgpt.com&disjunctive.conseilquartier&disjunctive.intervenant&disjunctive.type&disjunctive.soustype&disjunctive.arrondissement&disjunctive.prefixe&disjunctive.code_postal&refine.code_postal=75013&q=rat&basemap=jawg.dark&location=13,48.82399,2.36275&static=false&datasetcard=false&scrollWheelZoom=true"
+            src="https://opendata.paris.fr/explore/embed/dataset/dans-ma-rue/map/?refine.code_postal=75013&q=rat&basemap=jawg.dark&location=13,48.82399,2.36275&static=false&datasetcard=false&scrollWheelZoom=true"
             allowfullscreen>
         </iframe>
     </div>
 
-    <!-- TABLEAU -->
     <div class="table-container">
-        <h2>Détail des signalements</h2>
-
+        <h2>Détail des signalements officiels</h2>
         <iframe 
-            src="https://opendata.paris.fr/explore/embed/dataset/dans-ma-rue/table/?disjunctive.conseilquartier&disjunctive.intervenant&disjunctive.type&disjunctive.soustype&disjunctive.arrondissement&disjunctive.prefixe&disjunctive.code_postal&refine.arrondissement=13&q=rat&static=false&datasetcard=false"
+            src="https://opendata.paris.fr/explore/embed/dataset/dans-ma-rue/table/?refine.arrondissement=13&q=rat&static=false&datasetcard=false"
             frameborder="0">
         </iframe>
-
     </div>
 
 </div>
 
-<footer>
-</footer>
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAlkjNfp4WSYN7kUkVdUAEQgZCKlFHnGUc",
+    authDomain: "rats-f5b11.firebaseapp.com",
+    projectId: "rats-f5b11",
+    storageBucket: "rats-f5b11.appspot.com",
+    messagingSenderId: "1040343320667",
+    appId: "1:1040343320667:web:b391281c035721ce7b577e"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  signInAnonymously(auth);
+
+  window.__FIREBASE__ = { db, auth };
+</script>
+
+<script src="app.js"></script>
 
 </body>
 </html>
